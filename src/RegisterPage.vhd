@@ -7,9 +7,9 @@ entity RegisterFile is
     (
         clk        : in  std_logic;                     --! System clock
         reset      : in  std_logic;                     --! Reset signal to clear registers
-        i_rs1_addr : in  std_logic_vector( 4 downto 0);  --! Address of source register 1 
-        i_rs2_addr : in  std_logic_vector( 4 downto 0);  --! Address of source register 2
-        i_rd_addr  : in  std_logic_vector( 4 downto 0);  --! Address of destination register
+        i_rs1_addr : in  std_logic_vector( 4 downto 0); --! Address of source register 1 
+        i_rs2_addr : in  std_logic_vector( 4 downto 0); --! Address of source register 2
+        i_rd_addr  : in  std_logic_vector( 4 downto 0); --! Address of destination register
         i_rd_data  : in  std_logic_vector(31 downto 0); --! Data to write in destination register
         i_rd_we    : in  std_logic;                     --! Write enable to destination register
         o_rs1_data : out std_logic_vector(31 downto 0); --! Data from source register 1

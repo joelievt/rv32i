@@ -5,24 +5,24 @@ use ieee.numeric_std.all;
 entity Alu is
     port
     (
-        i_a      : in  std_logic_vector(31 downto 0);
-        i_b      : in  std_logic_vector(31 downto 0);
-        i_alu_op : in  std_logic_vector( 3 downto 0);
-        o_c      : out std_logic_vector(31 downto 0);
-        o_zero   : out std_logic
+        i_a      : in  std_logic_vector(31 downto 0); --! `A` operand
+        i_b      : in  std_logic_vector(31 downto 0); --! `B` operand
+        i_alu_op : in  std_logic_vector( 3 downto 0); --! Operation code (see constants)
+        o_c      : out std_logic_vector(31 downto 0); --! `C` result
+        o_zero   : out std_logic                      --! Result-is-zero flag
     );
 end Alu;
 
 architecture Behavioral of Alu is
-    constant OP_ADD     : std_logic_vector(3 downto 0) := "0000";
-    constant OP_SUB     : std_logic_vector(3 downto 0) := "0001";
-    constant OP_AND     : std_logic_vector(3 downto 0) := "0010";
-    constant OP_OR      : std_logic_vector(3 downto 0) := "0011";
-    constant OP_SRL     : std_logic_vector(3 downto 0) := "0100";
-    constant OP_SLL     : std_logic_vector(3 downto 0) := "0101";
-    constant OP_SRA     : std_logic_vector(3 downto 0) := "0110";
-    constant OP_XOR     : std_logic_vector(3 downto 0) := "0111";
-    constant OP_SLT     : std_logic_vector(3 downto 0) := "1000";
+    constant OP_ADD     : std_logic_vector(3 downto 0) := "0000"; --! Add operation
+    constant OP_SUB     : std_logic_vector(3 downto 0) := "0001"; --! Subtract operation
+    constant OP_AND     : std_logic_vector(3 downto 0) := "0010"; --! Bitwise `and` operation
+    constant OP_OR      : std_logic_vector(3 downto 0) := "0011"; --! Bitwise `or` operation
+    constant OP_SRL     : std_logic_vector(3 downto 0) := "0100"; --! Shift-Right-Logical operation
+    constant OP_SLL     : std_logic_vector(3 downto 0) := "0101"; --! Shift-Left-Logical operaiton
+    constant OP_SRA     : std_logic_vector(3 downto 0) := "0110"; --! Shift-Right-Arithmetic operation
+    constant OP_XOR     : std_logic_vector(3 downto 0) := "0111"; --! Bitwise `xor` operation
+    constant OP_SLT     : std_logic_vector(3 downto 0) := "1000"; --! Set-(if)-Less-Than operation
 
     signal a_add_b      : std_logic_vector(31 downto 0);
     signal a_sub_b      : std_logic_vector(31 downto 0);

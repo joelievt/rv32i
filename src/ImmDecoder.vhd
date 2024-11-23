@@ -5,8 +5,8 @@ use ieee.numeric_std.all;
 entity ImmDecoder is
     port
     (
-        instruction : in  std_logic_vector(31 downto 0); --! RV32I instruction
-        immediate   : out std_logic_vector(31 downto 0)  --! zero/sign extended 32 bits immediate
+        i_instruction : in  std_logic_vector(31 downto 0); --! RV32I instruction
+        o_immediate   : out std_logic_vector(31 downto 0)  --! zero/sign extended 32 bits immediate
     );
 end ImmDecoder;
 
@@ -30,7 +30,7 @@ architecture Behavioral of ImmDecoder is
     signal imm_j_se   : std_logic_vector(31 downto 0);
 
 begin
-    opcode <= instruction(6 downto 0);
+    opcode <= i_instruction(6 downto 0);
 
     -- Determine the instruction type based on the opcode
     with opcode select
@@ -43,11 +43,11 @@ begin
                       TYPE_UNK when others;
 
     -- Extract immediate fields based on RISC-V instruction format
-    imm_i <= instruction(31 downto 20);
-    imm_s <= instruction(31 downto 25) & instruction(11 downto 7);
-    imm_b <= instruction(31) & instruction(7) & instruction(30 downto 25) & instruction(11 downto 8) & '0';
-    imm_u <= instruction(31 downto 12) & "000000000000";
-    imm_j <= instruction(31) & instruction(19 downto 12) & instruction(20) & instruction(30 downto 21) & '0';
+    imm_i <= i_instruction(31 downto 20);
+    imm_s <= i_instruction(31 downto 25) & i_instruction(11 downto 7);
+    imm_b <= i_instruction(31) & i_instruction(7) & i_instruction(30 downto 25) & i_instruction(11 downto 8) & '0';
+    imm_u <= i_instruction(31 downto 12) & "000000000000";
+    imm_j <= i_instruction(31) & i_instruction(19 downto 12) & i_instruction(20) & i_instruction(30 downto 21) & '0';
 
     -- Sign-extension of required immediates to 32 bits
     imm_i_se <= std_logic_vector(resize(signed(imm_i), 32));
@@ -56,11 +56,11 @@ begin
     imm_j_se <= std_logic_vector(resize(signed(imm_j), 32));
 
     with instr_type select
-        immediate <= (others => '0') when TYPE_R | TYPE_UNK,
-                     imm_i_se        when TYPE_I,
-                     imm_s_se        when TYPE_S,
-                     imm_b_se        when TYPE_B,
-                     imm_u           when TYPE_U,
-                     imm_j_se        when TYPE_J;
+        o_immediate <= (others => '0') when TYPE_R | TYPE_UNK,
+                       imm_i_se        when TYPE_I,
+                       imm_s_se        when TYPE_S,
+                       imm_b_se        when TYPE_B,
+                       imm_u           when TYPE_U,
+                       imm_j_se        when TYPE_J;
 
 end Behavioral;

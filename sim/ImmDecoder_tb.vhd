@@ -1,3 +1,4 @@
+-- VHDL-2008
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -9,8 +10,8 @@ architecture Behavioral of ImmDecoder_tb is
     component ImmDecoder
         port
         (
-            instruction : in  std_logic_vector(31 downto 0);
-            immediate   : out std_logic_vector(31 downto 0)
+            i_instruction : in  std_logic_vector(31 downto 0);
+            o_immediate   : out std_logic_vector(31 downto 0)
         );
     end component;
 
@@ -23,8 +24,8 @@ begin
     uut : ImmDecoder
     port map
     (
-        instruction => instruction,
-        immediate   => immediate
+        i_instruction => instruction,
+        o_immediate   => immediate
     );
 
     process
